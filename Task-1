@@ -1,0 +1,98 @@
+/* Author:Deepanshu Thappa
+ *  Date: 17-07-2024
+ * Description:
+ * This is a java based Caesarcipher program that encrypts and decrypts text using Caesarcipher Algorithm.
+ * It takes input based on the user text along with shift value then encrypt or decrypt text.
+*/
+
+import java.util.Scanner;
+
+public class CaesarCipher {
+    
+    // Method to encrypt the text using Caesar Cipher
+    public static String encrypt(String text, int shift) {
+        StringBuilder encryptedText = new StringBuilder();
+        
+        // Iterate through each character of the text
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            
+            // Check if the character is an uppercase letter
+            if (Character.isUpperCase(c)) {
+                // Shift the character and wrap around if necessary
+                char shifted = (char) (((c - 'A' + shift) % 26 + 26) % 26 + 'A');
+                encryptedText.append(shifted);
+            }
+            // Check if the character is a lowercase letter
+            else if (Character.isLowerCase(c)) {
+                // Shift the character and wrap around if necessary
+                char shifted = (char) (((c - 'a' + shift) % 26 + 26) % 26 + 'a');
+                encryptedText.append(shifted);
+            }
+            // Append non-alphabet characters as is
+            else {
+                encryptedText.append(c);
+            }
+        }
+        
+        return encryptedText.toString();
+    }
+    
+    // Method to decrypt the text using Caesar Cipher
+    public static String decrypt(String text, int shift) {
+        StringBuilder decryptedText = new StringBuilder();
+        
+        // Iterate through each character of the text
+        for (int i = 0; i < text.length(); i++) {
+            char c = text.charAt(i);
+            
+            // Check if the character is an uppercase letter
+            if (Character.isUpperCase(c)) {
+                // Shift the character backwards and wrap around if necessary
+                char shifted = (char) (((c - 'A' - shift) % 26 + 26) % 26 + 'A');
+                decryptedText.append(shifted);
+            }
+            // Check if the character is a lowercase letter
+            else if (Character.isLowerCase(c)) {
+                // Shift the character backwards and wrap around if necessary
+                char shifted = (char) (((c - 'a' - shift) % 26 + 26) % 26 + 'a');
+                decryptedText.append(shifted);
+            }
+            // Append non-alphabet characters as is
+            else {
+                decryptedText.append(c);
+            }
+        }
+        
+        return decryptedText.toString();
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Input the operation (encrypt or decrypt)
+        System.out.print("Do you want to encrypt or decrypt the text? (Type 'encrypt' or 'decrypt'): ");
+        String operation = scanner.nextLine().trim().toLowerCase();
+        
+        // Input the text to be processed
+        System.out.print("Enter the text: ");
+        String text = scanner.nextLine();
+        
+        // Input the shift value
+        System.out.print("Enter the shift value: ");
+        int shift = scanner.nextInt();
+        
+        // Process the text based on the operation
+        if (operation.equals("encrypt")) {
+            String encryptedText = encrypt(text, shift);
+            System.out.println("Encrypted text: " + encryptedText);
+        } else if (operation.equals("decrypt")) {
+            String decryptedText = decrypt(text, shift);
+            System.out.println("Decrypted text: " + decryptedText);
+        } else {
+            System.out.println("Invalid operation. Please type 'encrypt' or 'decrypt'.");
+        }
+        
+        scanner.close();
+    }
+}
